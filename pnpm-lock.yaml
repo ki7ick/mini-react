@@ -106,7 +106,17 @@ importers:
         specifier: ^3.2.3
         version: 3.2.10(@types/node@22.5.2)
 
-  packages/react: {}
+  packages/react:
+    dependencies:
+      shared:
+        specifier: workspace:*
+        version: link:../shared
+
+  packages/react-reconciler:
+    dependencies:
+      shared:
+        specifier: workspace:*
+        version: link:../shared
 
   packages/shared: {}
 
