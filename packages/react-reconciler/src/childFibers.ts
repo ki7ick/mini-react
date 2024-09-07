@@ -18,7 +18,7 @@ import { Placement } from "./fiberFlags";
 function ChildReconciler(shouldTrackEffects: boolean) {
   function reconcileSingleElement(
     returnFiber: FiberNode,
-    curentFiber: FiberNode | null,
+    currentFiber: FiberNode | null,
     element: ReactElementType
   ) {
     // 根据 element 创建 Fiber 并返回
@@ -29,7 +29,7 @@ function ChildReconciler(shouldTrackEffects: boolean) {
 
   function reconcileSingleTextNode(
     returnFiber: FiberNode,
-    curentFiber: FiberNode | null,
+    currentFiber: FiberNode | null,
     element: string | number
   ) {
     const fiber = new FiberNode(HostText, { content: element }, null);
