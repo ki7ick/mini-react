@@ -135,6 +135,8 @@ function mountState<State>(
   }
 
   const queue = createUpdateQueue<State>();
+  hook.updateQueue = queue;
+  hook.memoizedState = memoizedState;
   // @ts-ignore
   const dispatch = dispatchSetState.bind(null, currentlyRenderingFiber, queue);
   /**
@@ -146,8 +148,6 @@ function mountState<State>(
    *
    * 控制台 setCount(1) 也会触发更新
    */
-  hook.updateQueue = queue;
-  hook.memoizedState = memoizedState;
   queue.dispatch = dispatch;
 
   return [memoizedState, dispatch];
@@ -176,7 +176,7 @@ function mountWorkInProgressHook(): Hook {
       throw new Error("请在函数组件中使用 hook");
     } else {
       workInProgressHook = hook;
-      currentlyRenderingFiber.memoizedState = workInProgressHook.memoizedState;
+      currentlyRenderingFiber.memoizedState = workInProgressHook;
     }
   } else {
     // mount 时 后续的 hook

@@ -7,8 +7,4 @@ function App() {
   return <div>{num}</div>;
 }
 
-function Child() {
-  return <div>Child</div>;
-}
-
 ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
