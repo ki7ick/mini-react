@@ -4,12 +4,7 @@ import ReactDOM from "react-dom";
 function App() {
   const [num, setNum] = useState(100);
   window.setNum = setNum;
-  return (
-    <div>
-      {/* <Child /> */}
-      {num}
-    </div>
-  );
+  return <div>{num}</div>;
 }
 
 function Child() {
