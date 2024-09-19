@@ -1,5 +1,5 @@
 import { FiberNode } from "react-reconciler/src/fiber";
-import { HostComponent, HostText } from "react-reconciler/src/workTags";
+import { HostText } from "react-reconciler/src/workTags";
 import { DOMElement, updateFiberProps } from "./SyntheticEvent";
 import { Props } from "shared/ReactTypes";
 
@@ -49,4 +49,12 @@ export function removeChild(
   container: Container
 ) {
   container.removeChild(child);
+}
+
+export function insertChildToContainer(
+  child: Instance,
+  container: Container,
+  before: Instance
+) {
+  container.insertBefore(child, before);
 }
