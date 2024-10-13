@@ -69,6 +69,7 @@ function updateState<State>(): [State, Dispatch<State>] {
   // 计算新的 state
   const queue = hook.updateQueue as UpdateQueue<State>;
   const pending = queue.shared.pending;
+  queue.shared.pending = null;
 
   if (pending !== null) {
     const { memoizedState } = processUpdateQueue(
@@ -119,7 +120,7 @@ function updateWorkInProgressHook(): Hook {
       throw new Error("请在函数组件中使用 hook");
     } else {
       workInProgressHook = newHook;
-      currentlyRenderingFiber.memoizedState = workInProgressHook.memoizedState;
+      currentlyRenderingFiber.memoizedState = workInProgressHook;
     }
   } else {
     // mount 时 后续的 hook
