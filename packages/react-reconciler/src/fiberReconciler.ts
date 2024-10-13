@@ -9,6 +9,7 @@ import {
 } from "./updateQueue";
 import type { ReactElementType } from "shared/ReactTypes";
 import { scheduleUpdateOnFiber } from "./workLoop";
+import { requestUpdateLane } from "./fiberLanes";
 
 export function createContainer(container: Container) {
   // 比如说reactDom.createRoot().render() 里 reactDom.createRoot() 会执行这个方法
@@ -24,11 +25,12 @@ export function updateContainer(
 ) {
   // 比如说reactDom.createRoot().render() 里 render() 会执行这个方法
   const hostRootFiber = root.current;
-  const update = createUpdate<ReactElementType | null>(element);
+  const lane = requestUpdateLane();
+  const update = createUpdate<ReactElementType | null>(element, lane);
   enqueueUpdate(
     hostRootFiber.updateQueue as UpdateQueue<ReactElementType | null>,
     update
   );
-  scheduleUpdateOnFiber(hostRootFiber);
+  scheduleUpdateOnFiber(hostRootFiber, lane);
   return element;
 }
