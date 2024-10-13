@@ -1,35 +1,20 @@
 import { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-noop-renderer";
 
 function App() {
-  const [num, updateNum] = useState(0);
-  useEffect(() => {
-    console.log("App mount");
-  }, []);
-
-  useEffect(() => {
-    console.log("num change create", num);
-
-    return () => {
-      console.log("num change destroy", num);
-    };
-  }, [num]);
-
   return (
-    <div onClick={() => updateNum(num + 1)}>
-      {num === 0 ? <Child /> : "noop"}
-    </div>
+    <>
+      <Child />
+      <div>hello world</div>
+    </>
   );
 }
 
 function Child() {
-  useEffect(() => {
-    console.log("Child mount");
-
-    return () => console.log("Child unmount");
-  }, []);
-
-  return "i am child";
+  return "Child";
 }
+const root = ReactDOM.createRoot();
 
-ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
+root.render(<App />);
+
+window.root = root;
