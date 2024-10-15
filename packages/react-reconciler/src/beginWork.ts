@@ -60,7 +60,6 @@ function updateHostRoot(wip: FiberNode, renderLane: Lane) {
   updateQueue.shared.pending = null;
 
   const { memoizedState } = processUpdateQueue(baseState, pending, renderLane); // 得到了最新状态
-
   wip.memoizedState = memoizedState;
 
   // 注意这里得到的 memoizedState 是 Element, 所以得将它作为 child

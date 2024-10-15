@@ -10,6 +10,10 @@ import {
 import type { ReactElementType } from "shared/ReactTypes";
 import { scheduleUpdateOnFiber } from "./workLoop";
 import { requestUpdateLane } from "./fiberLanes";
+import {
+  unstable_ImmediatePriority,
+  unstable_runWithPriority
+} from "scheduler";
 
 export function createContainer(container: Container) {
   // 比如说reactDom.createRoot().render() 里 reactDom.createRoot() 会执行这个方法
@@ -24,13 +28,16 @@ export function updateContainer(
   root: FiberRootNode
 ) {
   // 比如说reactDom.createRoot().render() 里 render() 会执行这个方法
-  const hostRootFiber = root.current;
-  const lane = requestUpdateLane();
-  const update = createUpdate<ReactElementType | null>(element, lane);
-  enqueueUpdate(
-    hostRootFiber.updateQueue as UpdateQueue<ReactElementType | null>,
-    update
-  );
-  scheduleUpdateOnFiber(hostRootFiber, lane);
+  unstable_runWithPriority(unstable_ImmediatePriority, () => {
+    const hostRootFiber = root.current;
+    const lane = requestUpdateLane();
+    const update = createUpdate<ReactElementType | null>(element, lane);
+    enqueueUpdate(
+      hostRootFiber.updateQueue as UpdateQueue<ReactElementType | null>,
+      update
+    );
+    scheduleUpdateOnFiber(hostRootFiber, lane);
+  });
+
   return element;
 }
